@@ -1,12 +1,15 @@
+import { ChangeEventHandler } from "react";
 import styled from "styled-components";
 
 interface InputProps {
   placeholder?: string;
+  value: string | number | undefined;
   margin?: string;
+  onChange: ChangeEventHandler<HTMLInputElement>;
 }
 
-export const Input = ({ placeholder, margin }: InputProps) => {
-  return <StyledInput placeholder={placeholder} margin={margin} />;
+export const Input = ({ placeholder, margin, value, onChange }: InputProps) => {
+  return <StyledInput onChange={onChange} placeholder={placeholder} margin={margin} value={value} />;
 };
 
 interface StyledInputProps {

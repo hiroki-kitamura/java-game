@@ -20,20 +20,20 @@ const initialReversiState: ReversiState = {
 
 export const reversi = (reversiState = initialReversiState, action: { type: ActionTypes } & Payloads) => {
   switch (action.type) {
-    case ActionTypes.postDiscCoodinateRequest:
+    case ActionTypes.postDiscCoordinateRequest:
       if (reversiState.isFetching) return;
       return {
         ...reversiState,
         isFetching: true,
       };
-    case ActionTypes.postDiscCoodinateSuccess:
+    case ActionTypes.postDiscCoordinateSuccess:
       if (reversiState.isFetching) return;
       return {
         ...reversiState,
         squares: JSON.parse(action.squaresJsonStr),
         isFetching: false,
       };
-    case ActionTypes.postDiscCoodinateFail:
+    case ActionTypes.postDiscCoordinateFail:
       if (reversiState.isFetching) return;
       return {
         ...reversiState,

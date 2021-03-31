@@ -1,10 +1,10 @@
-import axios, { AxiosError, AxiosRequestConfig, AxiosResponse } from "axios";
+import axios, { AxiosResponse } from "axios";
 import { Dispatch } from "redux";
 
 export enum ActionTypes {
-  postDiscCoodinateRequest,
-  postDiscCoodinateSuccess,
-  postDiscCoodinateFail,
+  postDiscCoordinateRequest,
+  postDiscCoordinateSuccess,
+  postDiscCoordinateFail,
 
   postUserInfoRequest,
   postUserInfoSuccess,
@@ -19,22 +19,29 @@ export enum ActionTypes {
   getGameStatusFail,
 }
 
-const postDiscCoodinateRequest = () => ({
-  type: ActionTypes.postDiscCoodinateRequest,
+const postDiscCoordinateRequest = () => ({
+  type: ActionTypes.postDiscCoordinateRequest,
 });
-const postDiscCoodinateSuccess = (squaresJson: JSON) => ({
-  type: ActionTypes.postDiscCoodinateSuccess,
+const postDiscCoordinateSuccess = (squaresJson: JSON) => ({
+  type: ActionTypes.postDiscCoordinateSuccess,
   posts: squaresJson,
 });
-const postDiscCoodinateFail = () => ({
-  type: ActionTypes.postDiscCoodinateFail,
+const postDiscCoordinateFail = () => ({
+  type: ActionTypes.postDiscCoordinateFail,
 });
-export const postDiscCoodinate = () => async (dispatch: Dispatch, config: AxiosRequestConfig) => {
-  dispatch(postDiscCoodinateRequest());
+export const postDiscCoordinate = (userName: string, coordinate: string) => async (dispatch: Dispatch) => {
+  dispatch(postDiscCoordinateRequest());
+
+  const config = {
+    data: {
+      userName,
+      coordinate,
+    },
+  };
   return axios
     .get("localhost:8080", config)
-    .then((res) => dispatch(postDiscCoodinateSuccess(res.data)))
-    .catch(() => dispatch(postDiscCoodinateFail()));
+    .then((res) => dispatch(postDiscCoordinateSuccess(res.data)))
+    .catch(() => dispatch(postDiscCoordinateFail()));
 };
 
 const postUserInfoRequest = () => ({
@@ -51,8 +58,14 @@ const postUserInfoFail = (err: { errMessage: string }) => ({
   type: ActionTypes.postUserInfoSuccess,
   err,
 });
-export const postUserInfo = () => async (dispatch: Dispatch, config: AxiosRequestConfig) => {
+export const postUserInfo = (userName: string) => async (dispatch: Dispatch) => {
   dispatch(postUserInfoRequest());
+
+  const config = {
+    data: {
+      userName,
+    },
+  };
   return axios
     .get("localhost:8080", config)
     .then((res) => dispatch(postUserInfoSuccess(res)))
@@ -72,8 +85,14 @@ const getUserInfoSuccess = (res: AxiosResponse) => ({
 const getUserInfoFail = () => ({
   type: ActionTypes.postUserInfoSuccess,
 });
-export const getUserInfo = () => async (dispatch: Dispatch, config: AxiosRequestConfig) => {
+export const getUserInfo = (userName: string) => async (dispatch: Dispatch) => {
   dispatch(getUserInfoRequest());
+
+  const config = {
+    data: {
+      userName,
+    },
+  };
   return axios
     .get("localhost:8080", config)
     .then((res) => dispatch(getUserInfoSuccess(res)))
@@ -90,8 +109,14 @@ const getGameStatusSuccess = (res: AxiosResponse) => ({
 const getGameStatusFail = () => ({
   type: ActionTypes.postUserInfoSuccess,
 });
-export const getGameStatus = () => async (dispatch: Dispatch, config: AxiosRequestConfig) => {
+export const getGameStatus = (gameId: number, userName: string) => async (dispatch: Dispatch) => {
   dispatch(getGameStatusRequest());
+  const config = {
+    data: {
+      gameId,
+      userName,
+    },
+  };
   return axios
     .get("localhost:8080", config)
     .then((res) => dispatch(getGameStatusSuccess(res)))
