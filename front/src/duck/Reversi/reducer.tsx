@@ -21,31 +21,33 @@ const initialReversiState: ReversiState = {
 export const reversi = (reversiState = initialReversiState, action: { type: ActionTypes } & Payloads) => {
   switch (action.type) {
     case ActionTypes.postDiscCoordinateRequest:
-      if (reversiState.isFetching) return;
+      if (reversiState.isFetching) return { ...reversiState };
       return {
         ...reversiState,
         isFetching: true,
       };
     case ActionTypes.postDiscCoordinateSuccess:
-      if (reversiState.isFetching) return;
+      if (reversiState.isFetching) return { ...reversiState };
       return {
         ...reversiState,
         squares: JSON.parse(action.squaresJsonStr),
         isFetching: false,
       };
     case ActionTypes.postDiscCoordinateFail:
-      if (reversiState.isFetching) return;
+      if (reversiState.isFetching) return { ...reversiState };
       return {
         ...reversiState,
         isFetching: false,
       };
 
     case ActionTypes.postUserInfoRequest:
+      if (reversiState.isFetching) return { ...reversiState };
       return {
         ...reversiState,
         isFetching: true,
       };
     case ActionTypes.postUserInfoSuccess:
+      if (reversiState.isFetching) return { ...reversiState };
       return {
         ...reversiState,
         isFetching: false,
@@ -55,17 +57,20 @@ export const reversi = (reversiState = initialReversiState, action: { type: Acti
         },
       };
     case ActionTypes.postUserInfoFail:
+      if (reversiState.isFetching) return { ...reversiState };
       return {
         ...reversiState,
         isFetching: false,
       };
 
     case ActionTypes.getUserInfoRequest:
+      if (reversiState.isFetching) return { ...reversiState };
       return {
         ...reversiState,
         isFetching: true,
       };
     case ActionTypes.getUserInfoSuccess:
+      if (reversiState.isFetching) return { ...reversiState };
       return {
         ...reversiState,
         isFetching: false,
@@ -75,17 +80,20 @@ export const reversi = (reversiState = initialReversiState, action: { type: Acti
         },
       };
     case ActionTypes.getUserInfoFail:
+      if (reversiState.isFetching) return { ...reversiState };
       return {
         ...reversiState,
         isFetching: false,
       };
 
     case ActionTypes.getGameStatusRequest:
+      if (reversiState.isFetching) return { ...reversiState };
       return {
         ...reversiState,
         isFetching: true,
       };
     case ActionTypes.getGameStatusSuccess:
+      if (reversiState.isFetching) return { ...reversiState };
       return {
         ...reversiState,
         isFetching: false,
@@ -95,10 +103,12 @@ export const reversi = (reversiState = initialReversiState, action: { type: Acti
         },
       };
     case ActionTypes.getGameStatusFail:
+      if (reversiState.isFetching) return { ...reversiState };
       return {
         ...reversiState,
         isFetching: false,
       };
+    default:
+      return { ...reversiState };
   }
-  return reversiState;
 };

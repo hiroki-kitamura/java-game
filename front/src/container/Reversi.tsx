@@ -7,7 +7,7 @@ import { Squares } from "src/components/parts/Squares/Squares";
 import { Status } from "src/components/parts/Status/Status";
 import { ReversiState } from "src/duck/Reversi/types";
 
-import { postUserInfo, getUserInfo, getGameStatus } from "src/duck/Reversi/action";
+import { postDiscCoordinate, postUserInfo, getUserInfo, getGameStatus } from "src/duck/Reversi/action";
 
 export interface MapReversiState {
   reversi: ReversiState;
@@ -21,7 +21,10 @@ export const Reversi = () => {
   };
   return (
     <Layout>
-      <Squares squares={state.reversi.game.squares}></Squares>
+      <Squares
+        squares={state.reversi.game.squares}
+        dispatcher={(coordinate: string) => dispatch(postDiscCoordinate(state.reversi.user.name, coordinate))}
+      ></Squares>
       <Status
         user={state.reversi.user}
         game={game}

@@ -29,7 +29,7 @@ const postDiscCoordinateSuccess = (squaresJson: JSON) => ({
 const postDiscCoordinateFail = () => ({
   type: ActionTypes.postDiscCoordinateFail,
 });
-export const postDiscCoordinate = (userName: string, coordinate: string) => async (dispatch: Dispatch) => {
+export const postDiscCoordinate = (userName: string | null, coordinate: string) => async (dispatch: Dispatch) => {
   dispatch(postDiscCoordinateRequest());
 
   const config = {

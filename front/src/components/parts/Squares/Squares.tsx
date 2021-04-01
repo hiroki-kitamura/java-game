@@ -5,7 +5,7 @@ import React, { useState } from "react";
 import { Square } from "src/components/parts/Square/Square";
 import { config } from "src/config";
 
-export const Squares: React.FC<SquaresProps> = ({ squares }): JSX.Element => {
+export const Squares: React.FC<SquaresProps> = ({ squares, dispatcher }): JSX.Element => {
   const [canPrace, setCanPlace] = useState(false);
 
   return (
@@ -13,24 +13,13 @@ export const Squares: React.FC<SquaresProps> = ({ squares }): JSX.Element => {
       {Array(64)
         .fill("")
         .map((_, i) => {
-          let colNum = i % config.colNum;
-          let rowNum = Math.floor(i / config.rowNum);
-          let coordinate = colNum + "-" + rowNum;
-          let status = squares[coordinate];
+          const colNum = i % config.colNum;
+          const rowNum = Math.floor(i / config.rowNum);
+          const coordinate = colNum + "-" + rowNum;
+          const status = squares[coordinate];
+          const onClick = () => dispatcher(coordinate);
 
-          const sendDiskActionToAPI: React.MouseEventHandler<HTMLElement> = async () => {
-            const params = new URLSearchParams();
-            params.append("coordinate", coordinate);
-            try {
-              if (canPrace) return;
-              await axios.post("localhost:8080/", params);
-              setCanPlace(false);
-            } catch (err) {
-              setCanPlace(true);
-              console.log(err);
-            }
-          };
-          return <Square status={status} coordinate={coordinate} onClick={() => sendDiskActionToAPI} key={coordinate}></Square>;
+          return <Square status={status} coordinate={coordinate} onClick={onClick} key={coordinate}></Square>;
         })}
     </StyledSquares>
   );
@@ -40,6 +29,7 @@ export interface SquaresProps {
   squares: {
     [index: string]: "blank" | "white" | "black" | "ready";
   };
+  dispatcher: Function;
 }
 const StyledSquares = styled.div`
   display: flex;

@@ -1,5 +1,11 @@
 import styled from "styled-components";
 
+export interface SquareProps {
+  status: "blank" | "white" | "black" | "ready";
+  coordinate: string;
+  onClick: React.MouseEventHandler<HTMLElement>;
+}
+
 export const Square: React.FC<SquareProps> = ({ status, coordinate, onClick }): JSX.Element => {
   const { squareColor, circleColor, isShowCircle } = getSquareColors(status);
 
@@ -9,12 +15,6 @@ export const Square: React.FC<SquareProps> = ({ status, coordinate, onClick }): 
     </StyledSquare>
   );
 };
-
-export interface SquareProps {
-  status: "blank" | "white" | "black" | "ready";
-  coordinate: string;
-  onClick: React.MouseEventHandler<HTMLElement>;
-}
 
 const getSquareColors = (status: string) => {
   let squareColor: string = "#048e04",
