@@ -30,7 +30,9 @@ export const reversi = (reversiState = initialReversiState, action: { type: Acti
       if (reversiState.isFetching) return { ...reversiState };
       return {
         ...reversiState,
-        squares: JSON.parse(action.squaresJsonStr),
+        game: {
+          squares: JSON.parse(action.squaresJsonStr),
+        },
         isFetching: false,
       };
     case ActionTypes.postDiscCoordinateFail:
